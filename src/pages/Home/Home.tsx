@@ -1,43 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { format } from "date-fns";
-import styled from "styled-components";
 import WeatherBox from "../../components/WeatherBox/WeatherBox";
 import { Data, Coordinates, Location } from "../../types/homeTypes";
-
-const Wrapper = styled.div`
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: #fff;
-
-  select {
-    width: 13rem;
-    font-size: 1.3rem;
-    border: 2px solid black;
-    padding: 0.2rem;
-  }
-  select:hover {
-    background-color: #f7ec9e;
-  }
-
-  label {
-    font-size: 1.5rem;
-    margin: 1rem 0rem;
-  }
-`;
-
-const ForecastContainer = styled.div`
-  display: flex;
-`;
-
-const WeatherWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem;
-`;
+import { Wrapper } from "./styles";
+import ForecastBox from "../../components/ForecastBox/ForecastBox";
 
 const Home = () => {
   const [location, setLocation] = useState<Coordinates>({
@@ -105,26 +70,7 @@ const Home = () => {
           <WeatherBox weather={weather} />
         </>
       ) : null}
-      {weather && weather.daily ? (
-        <ForecastContainer>
-          {weather.daily.slice(1, 6).map((item: any) => {
-            return (
-              <WeatherWrapper key={item.dt}>
-                <p>{format(new Date(+item.dt * 1000), "cccc, MMM d")}</p>
-                <img
-                  src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
-                  alt="weather icon"
-                />
-                <p>
-                  {Math.round(+item.temp.max)} °C &nbsp;/&nbsp;
-                  {Math.round(+item.temp.min)} °C
-                </p>
-                <p>{item.weather[0].description}</p>
-              </WeatherWrapper>
-            );
-          })}
-        </ForecastContainer>
-      ) : null}
+      {weather && weather.daily ? <ForecastBox weather={weather} /> : null}
     </Wrapper>
   );
 };

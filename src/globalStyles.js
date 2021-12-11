@@ -10,7 +10,7 @@ html {
 } */
  *, *::after, *::before {
     box-sizing: inherit;
-    font-family: 'Montserrat', sans-serif;
+     font-family: 'IBM Plex Mono', monospace;
     padding: 0;
   margin: 0;
   }
