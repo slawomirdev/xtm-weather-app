@@ -8,6 +8,8 @@ export type Data = {
     wind_speed: string;
     wind_deg: string;
     wind_gust: string;
+    humidity: string;
+    visibility: string;
     weather: [
       {
         icon: string;

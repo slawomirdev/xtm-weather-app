@@ -21,6 +21,11 @@ const Wrapper = styled.div`
   select:hover {
     background-color: #f7ec9e;
   }
+
+  label {
+    font-size: 1.5rem;
+    margin: 1rem 0rem;
+  }
 `;
 
 const ForecastContainer = styled.div`
@@ -97,14 +102,6 @@ const Home = () => {
       </select>
       {weather ? (
         <>
-          <h2>
-            {format(
-              new Date(
-                (+weather.current.dt + +weather.timezone_offset - 3600) * 1000
-              ),
-              "MMM d, H:mm"
-            )}
-          </h2>
           <WeatherBox weather={weather} />
         </>
       ) : null}
@@ -113,6 +110,7 @@ const Home = () => {
           {weather.daily.slice(1, 6).map((item: any) => {
             return (
               <WeatherWrapper key={item.dt}>
+                <p>{format(new Date(+item.dt * 1000), "cccc, MMM d")}</p>
                 <img
                   src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
                   alt="weather icon"
@@ -121,7 +119,7 @@ const Home = () => {
                   {Math.round(+item.temp.max)} °C &nbsp;/&nbsp;
                   {Math.round(+item.temp.min)} °C
                 </p>
-                <p>{format(new Date(+item.dt * 1000), "cccc, MMM d")}</p>
+                <p>{item.weather[0].description}</p>
               </WeatherWrapper>
             );
           })}

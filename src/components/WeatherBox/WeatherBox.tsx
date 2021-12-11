@@ -2,38 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
 import { windDirection } from "../../utils/windDirection";
+import { Data } from "../../types/homeTypes";
 
 interface IMyProps {
   weather: Data;
 }
-
-type Data = {
-  timezone_offset: string;
-  current: {
-    dt: string;
-    sunrise: string;
-    sunset: string;
-    temp: string;
-    wind_speed: string;
-    wind_deg: string;
-    wind_gust: string;
-    weather: [
-      {
-        icon: string;
-        description: string;
-      }
-    ];
-  };
-  daily: [
-    {
-      dt: string;
-      temp: {
-        min: string;
-        max: string;
-      };
-    }
-  ];
-};
 
 const CurrentWeather = styled.div`
   display: flex;
@@ -41,10 +14,32 @@ const CurrentWeather = styled.div`
   align-items: center;
   border-left: 2px solid #340a13;
   font-weight: bold;
-  /* flex-direction: column; */
+  flex-direction: column;
+
+  p {
+    font-size: 1.8rem;
+  }
+
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* div {
+    margin: 0.3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  } */
+`;
+
+const Details = styled.div`
+  display: flex;
+  flex-direction: row;
 
   div {
-    margin: 0.3rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,54 +77,76 @@ const Box = styled.div`
 const WeatherBox: React.FC<IMyProps> = ({ weather }) => {
   return (
     <CurrentWeather>
-      <div>
+      <h2>
+        {format(
+          new Date(
+            (+weather.current.dt + +weather.timezone_offset - 3600) * 1000
+          ),
+          "MMM d, H:mm"
+        )}
+      </h2>
+      <main>
         <img
           src={`http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`}
           alt="weather icon"
         />
 
         <p>{Math.round(+weather.current.temp)} °C</p>
-        <p>{weather.current.weather[0].description}</p>
-      </div>
-      <div>
-        <Box color="#051937" text="#fff">
-          <p>Wind speed</p>
-          <span>{weather.current.wind_speed} m/s</span>
-        </Box>
-        <Box color="#00456A" text="#fff">
-          <p>Wind direction</p>
-          <span>{windDirection(+weather.current.wind_deg)}</span>
-        </Box>
-      </div>
+      </main>
+      <p>{weather.current.weather[0].description}</p>
 
-      <div>
-        <Box color="#340A13" text="#fff">
-          <p>Sunrise</p>
-          <span>
-            {" "}
-            {format(
-              new Date(
-                (+weather.current.sunrise + +weather.timezone_offset - 3600) *
-                  1000
-              ),
-              "H:mm"
-            )}
-          </span>
-        </Box>
-        <Box color="#66373D" text="#fff">
-          <p>Sunset</p>
-          <span>
-            {" "}
-            {format(
-              new Date(
-                (+weather.current.sunset + +weather.timezone_offset - 3600) *
-                  1000
-              ),
-              "H:mm"
-            )}
-          </span>
-        </Box>
-      </div>
+      <Details>
+        <div>
+          <Box color="#051937" text="#fff">
+            <p>Wind speed</p>
+            <span>{weather.current.wind_speed} m/s</span>
+          </Box>
+          <Box color="#00456A" text="#fff">
+            <p>Wind direction</p>
+            <span>{windDirection(+weather.current.wind_deg)}</span>
+          </Box>
+        </div>
+
+        <div>
+          <Box color="#340A13" text="#fff">
+            <p>Sunrise</p>
+            <span>
+              {" "}
+              {format(
+                new Date(
+                  (+weather.current.sunrise + +weather.timezone_offset - 3600) *
+                    1000
+                ),
+                "H:mm"
+              )}
+            </span>
+          </Box>
+          <Box color="#66373D" text="#fff">
+            <p>Sunset</p>
+            <span>
+              {" "}
+              {format(
+                new Date(
+                  (+weather.current.sunset + +weather.timezone_offset - 3600) *
+                    1000
+                ),
+                "H:mm"
+              )}
+            </span>
+          </Box>
+        </div>
+
+        <div>
+          <Box color="#62507D" text="#fff">
+            <p>Humidity</p>
+            <span>{weather.current.humidity} %</span>
+          </Box>
+          <Box color="#936E9E" text="#fff">
+            <p>Visibility</p>
+            <span>{+weather.current.visibility / 1000}km</span>
+          </Box>
+        </div>
+      </Details>
     </CurrentWeather>
   );
 };
