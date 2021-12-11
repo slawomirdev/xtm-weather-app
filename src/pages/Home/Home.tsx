@@ -1,10 +1,37 @@
 import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
 import styled from "styled-components";
 
 type Location = "Poznan" | "London" | "Havana";
 type Coordinates = {
   lat: string;
   lon: string;
+};
+type Data = {
+  timezone_offset: string;
+  current: {
+    dt: string;
+    sunrise: string;
+    sunset: string;
+    temp: string;
+    wind_speed: string;
+    wind_deg: string;
+    wind_gust: string;
+    weather: [
+      {
+        icon: string;
+      }
+    ];
+  };
+  daily: [
+    {
+      dt: string;
+      temp: {
+        min: string;
+        max: string;
+      };
+    }
+  ];
 };
 
 const Wrapper = styled.div`
@@ -30,6 +57,7 @@ const WeatherWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 2rem;
 `;
 
 const Home = () => {
@@ -38,7 +66,7 @@ const Home = () => {
     lon: "16.93",
   });
   const [city, setCity] = useState<Location>("Poznan");
-  const [weather, setWeather] = useState<any>(null);
+  const [weather, setWeather] = useState<Data | null>(null);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -99,23 +127,40 @@ const Home = () => {
             src={`http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`}
             alt="weather icon"
           />
-          <p>Temp: {weather.current.temp}</p>
+          <p>Temp: {Math.round(+weather.current.temp)} &#8451;</p>
           <div>
             <p>Wind speed: {weather.current.wind_speed} </p>
             <p>Wind direction: {weather.current.wind_deg} </p>
           </div>
           <p>
             Current time:
-            {new Date(weather.current.dt * 1000).toLocaleTimeString("en-GB")}
+            {format(
+              new Date(
+                (+weather.current.dt + +weather.timezone_offset - 3600) * 1000
+              ),
+              "MMM d, H:mm"
+            )}
           </p>
           <div>
             <p>
               Sunries:
-              {new Date(weather.current.sunrise * 1000).toLocaleTimeString()}
+              {format(
+                new Date(
+                  (+weather.current.sunrise + +weather.timezone_offset - 3600) *
+                    1000
+                ),
+                "H:mm"
+              )}
             </p>
             <p>
               Sunset:
-              {new Date(weather.current.sunset * 1000).toLocaleTimeString()}
+              {format(
+                new Date(
+                  (+weather.current.sunset + +weather.timezone_offset - 3600) *
+                    1000
+                ),
+                "H:mm"
+              )}
             </p>
           </div>
         </CurrentWeather>
@@ -130,8 +175,10 @@ const Home = () => {
                   alt="weather icon"
                 />
                 <p>
-                  {item.temp.min}C / {item.temp.max}C
+                  {Math.round(+item.temp.max)} &#8451; /
+                  {Math.round(+item.temp.min)} &#8451;
                 </p>
+                <p>{format(new Date(+item.dt * 1000), "cccc, MMM d")}</p>
               </WeatherWrapper>
             );
           })}
