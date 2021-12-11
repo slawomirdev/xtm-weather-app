@@ -7,7 +7,6 @@ function App() {
     <>
       <GlobalStyle />
       <Home />
-      <h1>hello weather</h1>
     </>
   );
 }

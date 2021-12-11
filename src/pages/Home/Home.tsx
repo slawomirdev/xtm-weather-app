@@ -1,38 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import styled from "styled-components";
-
-type Location = "Poznan" | "London" | "Havana";
-type Coordinates = {
-  lat: string;
-  lon: string;
-};
-type Data = {
-  timezone_offset: string;
-  current: {
-    dt: string;
-    sunrise: string;
-    sunset: string;
-    temp: string;
-    wind_speed: string;
-    wind_deg: string;
-    wind_gust: string;
-    weather: [
-      {
-        icon: string;
-      }
-    ];
-  };
-  daily: [
-    {
-      dt: string;
-      temp: {
-        min: string;
-        max: string;
-      };
-    }
-  ];
-};
+import WeatherBox from "../../components/WeatherBox/WeatherBox";
+import { Data, Coordinates, Location } from "../../types/homeTypes";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -40,13 +10,17 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`;
+  background-color: #fff;
 
-const CurrentWeather = styled.div`
-  display: flex;
-  margin: 2rem;
-  align-items: center;
-  flex-direction: column;
+  select {
+    width: 13rem;
+    font-size: 1.3rem;
+    border: 2px solid black;
+    padding: 0.2rem;
+  }
+  select:hover {
+    background-color: #f7ec9e;
+  }
 `;
 
 const ForecastContainer = styled.div`
@@ -109,7 +83,7 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <h1>Weather app</h1>
+      <h1>XTM Weather</h1>
       <label htmlFor="locations">Choose location</label>
       <select
         name="locations"
@@ -122,50 +96,19 @@ const Home = () => {
         <option value="Havana">Havana</option>
       </select>
       {weather ? (
-        <CurrentWeather>
-          <img
-            src={`http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`}
-            alt="weather icon"
-          />
-          <p>Temp: {Math.round(+weather.current.temp)} &#8451;</p>
-          <div>
-            <p>Wind speed: {weather.current.wind_speed} </p>
-            <p>Wind direction: {weather.current.wind_deg} </p>
-          </div>
-          <p>
-            Current time:
+        <>
+          <h2>
             {format(
               new Date(
                 (+weather.current.dt + +weather.timezone_offset - 3600) * 1000
               ),
               "MMM d, H:mm"
             )}
-          </p>
-          <div>
-            <p>
-              Sunries:
-              {format(
-                new Date(
-                  (+weather.current.sunrise + +weather.timezone_offset - 3600) *
-                    1000
-                ),
-                "H:mm"
-              )}
-            </p>
-            <p>
-              Sunset:
-              {format(
-                new Date(
-                  (+weather.current.sunset + +weather.timezone_offset - 3600) *
-                    1000
-                ),
-                "H:mm"
-              )}
-            </p>
-          </div>
-        </CurrentWeather>
+          </h2>
+          <WeatherBox weather={weather} />
+        </>
       ) : null}
-      {weather ? (
+      {weather && weather.daily ? (
         <ForecastContainer>
           {weather.daily.slice(1, 6).map((item: any) => {
             return (
@@ -175,8 +118,8 @@ const Home = () => {
                   alt="weather icon"
                 />
                 <p>
-                  {Math.round(+item.temp.max)} &#8451; /
-                  {Math.round(+item.temp.min)} &#8451;
+                  {Math.round(+item.temp.max)} °C &nbsp;/&nbsp;
+                  {Math.round(+item.temp.min)} °C
                 </p>
                 <p>{format(new Date(+item.dt * 1000), "cccc, MMM d")}</p>
               </WeatherWrapper>
