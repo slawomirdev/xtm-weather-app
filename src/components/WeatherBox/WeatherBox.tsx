@@ -71,11 +71,11 @@ const WeatherBox: React.FC<IMyProps> = ({ weather }) => {
         </div>
 
         <div>
-          <Box color="#62507D" text="#fff">
+          <Box color="#4b159d" text="#fff">
             <p>Humidity</p>
             <span>{weather.current.humidity} %</span>
           </Box>
-          <Box color="#936E9E" text="#fff">
+          <Box color="#6c36bf" text="#fff">
             <p>Visibility</p>
             <span>{+weather.current.visibility / 1000}km</span>
           </Box>
