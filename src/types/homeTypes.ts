@@ -1,3 +1,17 @@
+type dailyData = {
+  dt: string;
+  temp: {
+    min: string;
+    max: string;
+  };
+  weather: weatherArray[];
+};
+
+type weatherArray = {
+  icon: string;
+  description: string;
+};
+
 export type Data = {
   timezone_offset: string;
   current: {
@@ -10,22 +24,9 @@ export type Data = {
     wind_gust: string;
     humidity: string;
     visibility: string;
-    weather: [
-      {
-        icon: string;
-        description: string;
-      }
-    ];
+    weather: weatherArray[];
   };
-  daily: [
-    {
-      dt: string;
-      temp: {
-        min: string;
-        max: string;
-      };
-    }
-  ];
+  daily: dailyData[];
 };
 
 export type Location = "Poznan" | "London" | "Havana";

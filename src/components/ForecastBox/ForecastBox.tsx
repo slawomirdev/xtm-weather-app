@@ -9,7 +9,7 @@ interface IMyProps {
 
 const ForecastBox: React.FC<IMyProps> = ({ weather }) => {
   return (
-    <ForecastContainer>
+    <ForecastContainer data-testid="forecastContainerWithData">
       {weather.daily.slice(1, 6).map((item: any) => {
         return (
           <WeatherWrapper key={item.dt}>

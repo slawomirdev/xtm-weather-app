@@ -64,10 +64,11 @@ const Home = () => {
         name="locations"
         id="locations"
         value={city}
+        data-testid="select"
         onChange={(e) => setCordinates(e.target.value as Location)}
       >
         <option value="Poznan">Poznań</option>
-        <option value="London">Londyn</option>
+        <option value="London">London</option>
         <option value="Havana">Havana</option>
       </select>
       {loading && <h2>Loading...</h2>}

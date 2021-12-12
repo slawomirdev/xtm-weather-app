@@ -25,9 +25,9 @@ const WeatherBox: React.FC<IMyProps> = ({ weather }) => {
           alt="weather icon"
         />
 
-        <p>{Math.round(+weather.current.temp)} °C</p>
+        <p data-testid="weatherTemp">{Math.round(+weather.current.temp)} °C</p>
       </main>
-      <p>{weather.current.weather[0].description}</p>
+      <p data-testid="weatherDesc">{weather.current.weather[0].description}</p>
 
       <Details>
         <div>
