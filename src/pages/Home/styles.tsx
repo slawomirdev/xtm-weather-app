@@ -17,6 +17,10 @@ export const Wrapper = styled.div`
 
   h1 {
     margin: 0.6rem;
+
+    @media only screen and (max-width: 1000px) {
+      margin-top: 2.5rem;
+    }
   }
 
   select {

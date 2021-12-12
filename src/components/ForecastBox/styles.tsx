@@ -23,6 +23,7 @@ export const ForecastContainer = styled.div`
   @media only screen and (max-width: 800px) {
     width: 95%;
     margin: 1rem 0;
+    margin-bottom: 3rem;
   }
 `;
 
