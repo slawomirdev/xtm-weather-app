@@ -7,8 +7,8 @@
 
 ### Screenshot
 
-![Final look of the website](./assets/view.png)
-![Ipad view](./assets/ipadview.png)
+![Final look of the website](./src/assets/view.png)
+![Ipad view](./src/assets/ipadview.png)
 
 
 ### Built with
