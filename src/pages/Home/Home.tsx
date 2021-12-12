@@ -3,6 +3,7 @@ import WeatherBox from "../../components/WeatherBox/WeatherBox";
 import { Data, Coordinates, Location } from "../../types/homeTypes";
 import { Wrapper } from "./styles";
 import ForecastBox from "../../components/ForecastBox/ForecastBox";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Home = () => {
   const [location, setLocation] = useState<Coordinates>({
@@ -71,7 +72,7 @@ const Home = () => {
         <option value="London">London</option>
         <option value="Havana">Havana</option>
       </select>
-      {loading && <h2>Loading...</h2>}
+      {loading && <Spinner />}
       {error && <h2>{error}</h2>}
       {weather ? (
         <>
