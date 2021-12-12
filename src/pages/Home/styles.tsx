@@ -11,6 +11,11 @@ export const Wrapper = styled.div`
   color: #fff;
   overflow-y: auto;
 
+  img {
+    height: 6rem;
+    width: 6rem;
+  }
+
   @media only screen and (max-width: 1000px) {
     height: 100%;
   }
