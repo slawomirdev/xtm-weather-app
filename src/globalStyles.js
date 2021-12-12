@@ -4,13 +4,13 @@ const GlobalStyle = createGlobalStyle`
 html {
     box-sizing: border-box;
   }
-/* body {
-  padding: 0;
-  margin: 0;
-} */
+  body{
+     background-color: #1b1c29;
+  }
+
  *, *::after, *::before {
     box-sizing: inherit;
-     font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Lato', sans-serif;
     padding: 0;
   margin: 0;
   }

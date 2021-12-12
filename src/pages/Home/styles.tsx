@@ -5,8 +5,19 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
-  background-color: #fff;
+  background-color: #1b1c29;
+  color: #fff;
+  overflow-y: auto;
+
+  @media only screen and (max-width: 1000px) {
+    height: 100%;
+  }
+
+  h1 {
+    margin: 0.6rem;
+  }
 
   select {
     width: 13rem;
@@ -20,7 +31,7 @@ export const Wrapper = styled.div`
 
   label {
     font-size: 1.5rem;
-    margin: 1rem 0rem;
+    margin: 0.3rem 0rem;
   }
 `;
 
