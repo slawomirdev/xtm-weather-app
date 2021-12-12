@@ -15,7 +15,7 @@ const ForecastBox: React.FC<IMyProps> = ({ weather }) => {
           <WeatherWrapper key={item.dt}>
             <p>{format(new Date(+item.dt * 1000), "cccc, MMM d")}</p>
             <img
-              src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+              src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
               alt="weather icon"
             />
             <p>
