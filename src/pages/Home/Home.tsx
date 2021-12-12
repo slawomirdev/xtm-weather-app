@@ -11,17 +11,22 @@ const Home = () => {
   });
   const [city, setCity] = useState<Location>("Poznan");
   const [weather, setWeather] = useState<Data | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWeather = async () => {
+      setLoading(true);
       try {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/onecall?lat=${location.lat}&lon=${location.lon}&exclude=hourly,minutely,alerts&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
         );
         const data = await response.json();
         setWeather(data);
+        setLoading(false);
       } catch (error) {
-        console.log("Fetch error: ", error);
+        setError("Something went wrong");
+        setLoading(false);
       }
     };
     fetchWeather();
@@ -65,6 +70,8 @@ const Home = () => {
         <option value="London">Londyn</option>
         <option value="Havana">Havana</option>
       </select>
+      {loading && <h2>Loading...</h2>}
+      {error && <h2>{error}</h2>}
       {weather ? (
         <>
           <WeatherBox weather={weather} />
